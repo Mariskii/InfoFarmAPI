@@ -20,4 +20,6 @@ public class Plantation {
     private String name;
     private String description;
     private String location;
+
+    //TODO: IMPLEMENTAR SIGPAC
 }

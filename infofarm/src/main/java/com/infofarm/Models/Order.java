@@ -1,14 +1,12 @@
 package com.infofarm.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Entity
@@ -21,4 +19,18 @@ public class Order {
     private String id;
     private Date date_order;
     private Date date_arrive;
+    private double quantity;
+
+    //Empresa que pide
+    @ManyToOne
+    @JoinColumn(name = "id_bussines", nullable = false)
+    private Costumer costumer;
+
+    //Lo que pide
+    @ManyToMany
+    @JoinTable(
+            name = "orderedCrop",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "crop_id"))
+    private Set<Crop> crops;
 }

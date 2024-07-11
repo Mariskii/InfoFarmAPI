@@ -1,13 +1,13 @@
 package com.infofarm.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -23,4 +23,7 @@ public class Costumer {
     private String description;
     private String location;
     private String image;
+
+    @OneToMany
+    private Set<Order> orders = new HashSet<>();
 }

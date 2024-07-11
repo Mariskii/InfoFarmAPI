@@ -1,14 +1,13 @@
 package com.infofarm.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.infofarm.Models.Users.Roles;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Entity
@@ -24,5 +23,11 @@ public class Tasks {
     private String status;
     private String priority;
     private Date limit_date;
+
+    @ManyToOne
+    @JoinColumn(name = "id_bussines", nullable = false)
+    private Bussines bussines;
+
     //TODO: Implementar los roles que pueden ver la tarea
+    //private Set<Roles> canWatch;
 }
