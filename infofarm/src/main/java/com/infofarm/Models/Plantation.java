@@ -1,12 +1,12 @@
 package com.infofarm.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -20,6 +20,9 @@ public class Plantation {
     private String name;
     private String description;
     private String location;
+
+    @OneToMany(mappedBy = "plantation", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CropData> cropData = new HashSet<>();
 
     //TODO: IMPLEMENTAR SIGPAC
 }

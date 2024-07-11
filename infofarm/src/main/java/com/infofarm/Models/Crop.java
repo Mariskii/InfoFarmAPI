@@ -20,12 +20,11 @@ public class Crop {
     private String cropName;
     private String cropDescription;
     private String cropImage;
-    private Date planting_date;
-    private Date collection_date;
-    private double sale_price;
-    private double cost;
-    private double kilos;
+
 
     @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CropNeeds> cropNeeds = new HashSet<>();
+
+    @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CropData> cropData = new HashSet<>();
 }
