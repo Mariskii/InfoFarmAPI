@@ -1,0 +1,31 @@
+package com.infofarm.Models;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+@Data
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+public class Crop {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String cropName;
+    private String cropDescription;
+    private String cropImage;
+    private Date planting_date;
+    private Date collection_date;
+    private double sale_price;
+    private double cost;
+    private double kilos;
+
+    @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<CropNeeds> cropNeeds = new HashSet<>();
+}
