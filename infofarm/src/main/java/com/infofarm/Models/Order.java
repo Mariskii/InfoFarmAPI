@@ -1,6 +1,6 @@
 package com.infofarm.Models;
 
-import com.infofarm.Crop.Models.Crop;
+import com.infofarm.Field.Models.Crop;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
