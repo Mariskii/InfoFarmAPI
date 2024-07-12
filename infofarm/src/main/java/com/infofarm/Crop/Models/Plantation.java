@@ -1,4 +1,4 @@
-package com.infofarm.Models;
+package com.infofarm.Crop.Models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

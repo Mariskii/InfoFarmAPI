@@ -1,4 +1,4 @@
-package com.infofarm.Models;
+package com.infofarm.Crop.Models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,9 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @Entity
@@ -27,9 +25,9 @@ public class Crop {
 
     private String cropImage;
 
-
-    @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<CropNeeds> cropNeeds = new HashSet<>();
+    @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<CropNeeds> cropNeeds = new ArrayList<>();
+    //El priblema era del set que habia antes TODO: investigar diferencia entre List y Set
 
     @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CropData> cropData = new HashSet<>();

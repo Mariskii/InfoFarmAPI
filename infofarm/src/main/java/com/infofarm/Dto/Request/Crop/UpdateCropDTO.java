@@ -1,4 +1,4 @@
-package com.infofarm.Dto.Crop;
+package com.infofarm.Dto.Request.Crop;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
