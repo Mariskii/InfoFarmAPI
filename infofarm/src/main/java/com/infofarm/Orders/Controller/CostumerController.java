@@ -1,13 +1,11 @@
-package com.infofarm.Facturation.Controller;
+package com.infofarm.Orders.Controller;
 
 import com.infofarm.Exception.Errors.IdNotFoundException;
-import com.infofarm.Facturation.Dto.Request.CreateCostumerDTO;
-import com.infofarm.Facturation.Implenetation.CostumerServiceImpl;
-import com.infofarm.Facturation.Models.Costumer;
-import com.infofarm.Facturation.Service.CostumerService;
+import com.infofarm.Orders.Dto.Request.CreateCostumerDTO;
+import com.infofarm.Orders.Implenetation.CostumerServiceImpl;
+import com.infofarm.Orders.Models.Costumer;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

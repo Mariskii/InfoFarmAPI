@@ -1,4 +1,4 @@
-package com.infofarm.Facturation.Dto.Request;
+package com.infofarm.Orders.Dto.Request;
 
 public record CropDataOrderDTO(
         Long cropDataId,

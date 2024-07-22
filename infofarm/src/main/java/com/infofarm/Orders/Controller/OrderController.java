@@ -1,19 +1,15 @@
-package com.infofarm.Facturation.Controller;
+package com.infofarm.Orders.Controller;
 
 import com.infofarm.Exception.Errors.IdNotFoundException;
 import com.infofarm.Exception.Errors.NotEnoughtQuantityException;
-import com.infofarm.Facturation.Dto.Request.CropDataOrderDTO;
-import com.infofarm.Facturation.Dto.Request.OrderDTO;
-import com.infofarm.Facturation.Dto.Request.UpdateOrderProductDTO;
-import com.infofarm.Facturation.Implenetation.OrderServiceImpl;
+import com.infofarm.Orders.Dto.Request.OrderDTO;
+import com.infofarm.Orders.Dto.Request.UpdateOrderProductDTO;
+import com.infofarm.Orders.Implenetation.OrderServiceImpl;
 
-import com.infofarm.Facturation.Models.CropOrder;
-import com.infofarm.Facturation.Models.OrderCropData;
+import com.infofarm.Orders.Models.CropOrder;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/order")

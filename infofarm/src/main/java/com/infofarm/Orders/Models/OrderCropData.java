@@ -1,8 +1,7 @@
-package com.infofarm.Facturation.Models;
+package com.infofarm.Orders.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.infofarm.Field.Models.CropData;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

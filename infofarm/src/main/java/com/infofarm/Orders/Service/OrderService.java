@@ -1,13 +1,10 @@
-package com.infofarm.Facturation.Service;
+package com.infofarm.Orders.Service;
 
 import com.infofarm.Exception.Errors.IdNotFoundException;
 import com.infofarm.Exception.Errors.NotEnoughtQuantityException;
-import com.infofarm.Facturation.Dto.Request.CropDataOrderDTO;
-import com.infofarm.Facturation.Dto.Request.OrderDTO;
-import com.infofarm.Facturation.Dto.Request.UpdateOrderProductDTO;
-import com.infofarm.Facturation.Models.CropOrder;
-
-import java.util.List;
+import com.infofarm.Orders.Dto.Request.OrderDTO;
+import com.infofarm.Orders.Dto.Request.UpdateOrderProductDTO;
+import com.infofarm.Orders.Models.CropOrder;
 
 public interface OrderService {
     CropOrder createOrder(OrderDTO order) throws IdNotFoundException, NotEnoughtQuantityException;

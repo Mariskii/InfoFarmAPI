@@ -1,6 +1,5 @@
-package com.infofarm.Facturation.Models;
+package com.infofarm.Orders.Models;
 
-import com.infofarm.Field.Models.CropData;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

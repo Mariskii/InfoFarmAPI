@@ -9,6 +9,4 @@ import java.util.Date;
 public class BussinesDTO {
     @NotBlank
     private String name;
-
-    private String logoURL;
 }

@@ -18,13 +18,15 @@ public class Bussines {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String name;
 
     private String logoURL;
 
     private Date creationDate;
+
+    private String image_public_id;
 
     @OneToMany(mappedBy = "bussines", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Tasks> tasks = new HashSet<>();
