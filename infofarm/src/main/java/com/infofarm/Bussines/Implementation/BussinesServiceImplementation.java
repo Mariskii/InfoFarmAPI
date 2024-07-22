@@ -63,10 +63,11 @@ public class BussinesServiceImplementation implements BussinesService {
 
         actualBussines.setName(bussinesName);
 
-        String[] imageData = cloudinaryService.uploadFile(file,"bussines_logos");
-
         if(!file.isEmpty()) {
-            cloudinaryService.deleteFile(actualBussines.getLogoURL());
+            cloudinaryService.deleteFile(actualBussines.getImage_public_id());
+
+            String[] imageData = cloudinaryService.uploadFile(file,"bussines_logos");
+
             actualBussines.setLogoURL(imageData[0]);
             actualBussines.setImage_public_id(imageData[1]);
         }
