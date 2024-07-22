@@ -43,17 +43,17 @@ public class CropServiceImplementation implements CropService {
     @Override
     public void update(UpdateCropDTO cropRequestDTO) throws IdNotFoundException {
 
-        Optional<Crop> crop = cropRepository.findById(cropRequestDTO.getId());
+        Optional<Crop> crop = cropRepository.findById(cropRequestDTO.id());
 
         if (crop.isPresent()) {
             Crop c = crop.get();
-            c.setCropName(cropRequestDTO.getCropName());
-            c.setCropDescription(cropRequestDTO.getCropDescription());
-            c.setCropImage(cropRequestDTO.getCropImage());
+            c.setCropName(cropRequestDTO.cropName());
+            c.setCropDescription(cropRequestDTO.cropDescription());
+            c.setCropImage(cropRequestDTO.cropImage());
 
             cropRepository.save(c);
         } else {
-            throw new IdNotFoundException("Crop not found with id " + cropRequestDTO.getId());
+            throw new IdNotFoundException("Crop not found with id " + cropRequestDTO.id());
         }
 
     }
@@ -125,7 +125,7 @@ public class CropServiceImplementation implements CropService {
         CropData newData = CropData.builder()
                 .kilos(cropDataDTO.getKilos())
                 .cost(cropDataDTO.getCost())
-                .sale_price(cropDataDTO.getSale_price())
+                .kilo_price(cropDataDTO.getKiloPrice())
                 .planting_date(cropDataDTO.getPlanting_date())
                 .collection_date(cropDataDTO.getCollection_date())
                 .plantation(plantation)
@@ -141,7 +141,7 @@ public class CropServiceImplementation implements CropService {
 
         actualData.setCost(cropData.getCost());
         actualData.setKilos(cropData.getKilos());
-        actualData.setSale_price(cropData.getSale_price());
+        actualData.setKilo_price(cropData.getKiloPrice());
         actualData.setPlanting_date(cropData.getPlanting_date());
         actualData.setCollection_date(cropData.getCollection_date());
         cropDataRepository.save(actualData);

@@ -21,7 +21,7 @@ public class CropData {
 
     private Date planting_date;
     private Date collection_date;
-    private double sale_price;
+    private double kilo_price;
     private double cost;
     private double kilos;
 

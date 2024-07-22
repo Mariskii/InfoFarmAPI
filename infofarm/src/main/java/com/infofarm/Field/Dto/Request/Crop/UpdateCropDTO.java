@@ -5,18 +5,9 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-@Data
-public class UpdateCropDTO {
-
-    @NotNull(message = "ID is required")
-    private Long id;
-
-    @NotBlank(message = "Crop name cant be empty")
-    private String cropName;
-
-    @NotEmpty(message = "Crop description is required")
-    private String cropDescription;
-
-    @NotEmpty(message = "Crop image is required")
-    private String cropImage;
-}
+public record UpdateCropDTO(
+        @NotNull(message = "ID is required") Long id,
+        @NotBlank(message = "Crop name can't be empty") String cropName,
+        @NotEmpty(message = "Crop description is required") String cropDescription,
+        @NotEmpty(message = "Crop image is required") String cropImage
+) {}
