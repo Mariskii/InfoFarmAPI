@@ -8,7 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -26,7 +28,7 @@ public class Plantation {
     private String location;
 
     @OneToMany(mappedBy = "plantation", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<CropData> cropData = new HashSet<>();
+    private List<CropData> cropData = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bussines_id")

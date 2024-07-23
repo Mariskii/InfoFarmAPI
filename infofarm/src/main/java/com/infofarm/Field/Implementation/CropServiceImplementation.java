@@ -3,6 +3,7 @@ package com.infofarm.Field.Implementation;
 import com.infofarm.Field.Dto.Request.Crop.CreateCropDTO;
 import com.infofarm.Field.Dto.Request.CropData.RequestCropDataDTO;
 import com.infofarm.Field.Dto.Response.Crop.CropResponseDTO;
+import com.infofarm.Field.Dto.Response.CropData.CropDataResponseDTO;
 import com.infofarm.Field.Models.CropData;
 import com.infofarm.Field.Models.Plantation;
 import com.infofarm.Field.Repository.CropDataRepository;
@@ -19,10 +20,14 @@ import com.infofarm.Field.Service.CropService;
 import com.infofarm.Images.Implementation.CloudinaryServiceImpl;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -54,6 +59,8 @@ public class CropServiceImplementation implements CropService {
                 .cropName(cropDTO.cropName())
                 .cropDescription(cropDTO.cropDescription())
                 .build();
+
+        System.out.println(file);
 
         if(file != null) {
             String[] imageData = cloudinaryService.uploadFile(file,FOLDER_NAME);
@@ -97,13 +104,19 @@ public class CropServiceImplementation implements CropService {
 
     }
 
-    //TODO: Devolver DTO sin el id publico de la imagen
     @Override
     public CropResponseDTO findById(Long id) throws IdNotFoundException {
 
         Crop crop = cropRepository.findById(id).orElseThrow(() -> new IdNotFoundException("The crop not found with id: " + id));
 
         return createCropResponseDTO(crop);
+    }
+
+    @Override
+    public Page<CropResponseDTO> getCrops(int page, int size) {
+        Pageable pageable = PageRequest.of(page,size);
+        Page<Crop> cropsPage = cropRepository.findAll(pageable);
+        return cropsPage.map(this::createCropResponseDTO);
     }
 
     @Override
@@ -146,8 +159,18 @@ public class CropServiceImplementation implements CropService {
     }
 
     @Override
-    public Set<CropData> getCropDataByCropId(Long id) throws IdNotFoundException {
-        return cropDataRepository.findByCrop_Id(id);
+    public List<CropDataResponseDTO> getCropDataByPlantationId(Long id) throws IdNotFoundException {
+        Plantation p = plantationRepository.findById(id).orElseThrow(() -> new IdNotFoundException("The plantation not found with id: " + id));
+        return p.getCropData().stream().map(this::createCropDataResponseDTO).toList();
+    }
+
+    @Override
+    public CropDataResponseDTO getCropDataById(Long id) throws IdNotFoundException {
+
+        CropData cropData = cropDataRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException("Crop Data with the ID "+id+" not found"));
+
+        return createCropDataResponseDTO(cropData);
     }
 
     @Override
@@ -191,6 +214,18 @@ public class CropServiceImplementation implements CropService {
                 .cropName(crop.getCropName())
                 .cropDescription(crop.getCropDescription())
                 .imageURL(crop.getImageURL())
+                .build();
+    }
+
+    private CropDataResponseDTO createCropDataResponseDTO(CropData cropData) {
+        return CropDataResponseDTO.builder()
+                .id(cropData.getId())
+                .kilo_price(cropData.getKilo_price())
+                .kilos(cropData.getKilos())
+                .cost(cropData.getCost())
+                .collection_date(cropData.getCollection_date())
+                .planting_date(cropData.getPlanting_date())
+                .crop(createCropResponseDTO(cropData.getCrop()))
                 .build();
     }
 }

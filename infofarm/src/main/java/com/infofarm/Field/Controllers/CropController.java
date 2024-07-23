@@ -3,6 +3,7 @@ package com.infofarm.Field.Controllers;
 import com.infofarm.Field.Dto.Request.Crop.CreateCropDTO;
 import com.infofarm.Field.Dto.Request.CropData.RequestCropDataDTO;
 import com.infofarm.Field.Dto.Response.Crop.CropResponseDTO;
+import com.infofarm.Field.Dto.Response.CropData.CropDataResponseDTO;
 import com.infofarm.Field.Models.CropData;
 import com.infofarm.Field.Dto.Request.Crop.UpdateCropDTO;
 import com.infofarm.Field.Dto.Request.CropNeeds.CreateCropNeedDTO;
@@ -13,11 +14,13 @@ import com.infofarm.Field.Models.Crop;
 import com.infofarm.Field.Models.CropNeeds;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -30,6 +33,12 @@ public class CropController {
     @GetMapping("get-crop/{cropId}")
     public CropResponseDTO getCropById(@PathVariable Long cropId) throws IdNotFoundException {
         return cropServiceImpl.findById(cropId);
+    }
+
+    @GetMapping("get-all-crops")
+    public Page<CropResponseDTO> getCrops(@RequestParam(required = false, defaultValue = "0") int page,
+                                          @RequestParam(required = false, defaultValue = "10") int size) {
+        return cropServiceImpl.getCrops(page,size);
     }
 
     @PostMapping("create-crop")
@@ -75,9 +84,14 @@ public class CropController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("{cropId}/crop-data")
-    public Set<CropData> getCropDataByCropId(@PathVariable Long cropId) throws IdNotFoundException {
-        return cropServiceImpl.getCropDataByCropId(cropId);
+    @GetMapping("plantation/{plantationId}/crop-data")
+    public List<CropDataResponseDTO> getCropDataByPlantationId(@PathVariable Long plantationId) throws IdNotFoundException {
+        return cropServiceImpl.getCropDataByPlantationId(plantationId);
+    }
+
+    @GetMapping("plantation/{plantationId}/crop-data")
+    public CropDataResponseDTO getCropDataById(@PathVariable Long plantationId) throws IdNotFoundException {
+        return cropServiceImpl.getCropDataById(plantationId);
     }
 
     @PutMapping("crop-data/update/crop/{cropId}")

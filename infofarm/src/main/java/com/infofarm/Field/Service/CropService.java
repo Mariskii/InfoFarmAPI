@@ -3,6 +3,7 @@ package com.infofarm.Field.Service;
 import com.infofarm.Field.Dto.Request.Crop.CreateCropDTO;
 import com.infofarm.Field.Dto.Request.CropData.RequestCropDataDTO;
 import com.infofarm.Field.Dto.Response.Crop.CropResponseDTO;
+import com.infofarm.Field.Dto.Response.CropData.CropDataResponseDTO;
 import com.infofarm.Field.Models.CropData;
 import com.infofarm.Field.Dto.Request.Crop.UpdateCropDTO;
 import com.infofarm.Field.Dto.Request.CropNeeds.CreateCropNeedDTO;
@@ -10,8 +11,11 @@ import com.infofarm.Field.Dto.Request.CropNeeds.UpdateCropNeedDTO;
 import com.infofarm.Exception.Errors.IdNotFoundException;
 import com.infofarm.Field.Models.Crop;
 import com.infofarm.Field.Models.CropNeeds;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Set;
 
 public interface CropService {
@@ -24,6 +28,8 @@ public interface CropService {
 
     CropResponseDTO findById(Long id) throws IdNotFoundException;
 
+    Page<CropResponseDTO> getCrops(int page, int size);
+
     Set<CropNeeds> findAllCropNeedsByCropId(Long cropId) throws IdNotFoundException;
 
     void addCropNeed(CreateCropNeedDTO cropNeeds, Long id) throws IdNotFoundException;
@@ -32,7 +38,9 @@ public interface CropService {
 
     void deleteCropNeed(Long id) throws IdNotFoundException;
 
-    Set<CropData> getCropDataByCropId(Long id) throws IdNotFoundException;
+    List<CropDataResponseDTO> getCropDataByPlantationId(Long id) throws IdNotFoundException;
+
+    CropDataResponseDTO getCropDataById(Long id) throws IdNotFoundException;
 
     void addCropData(RequestCropDataDTO cropData, Long id, Long plantationId) throws IdNotFoundException;
 

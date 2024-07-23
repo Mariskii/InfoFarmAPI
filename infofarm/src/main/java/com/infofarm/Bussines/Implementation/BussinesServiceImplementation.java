@@ -38,14 +38,17 @@ public class BussinesServiceImplementation implements BussinesService {
     @Transactional
     public BussinesResponseDTO createBussines(String bussinesName, MultipartFile file) throws IOException {
 
-        String[] imageData = cloudinaryService.uploadFile(file,"bussines_logos");
-
         Bussines newBussines = Bussines.builder()
                 .creationDate(new Date())
                 .name(bussinesName)
-                .logoURL(imageData[0])
-                .image_public_id(imageData[1])
                 .build();
+
+        if(file != null) {
+            String[] imageData = cloudinaryService.uploadFile(file,"bussines_logos");
+
+            newBussines.setLogoURL(imageData[0]);
+            newBussines.setImage_public_id(imageData[1]);
+        }
 
         newBussines = bussinesRepository.save(newBussines);
 

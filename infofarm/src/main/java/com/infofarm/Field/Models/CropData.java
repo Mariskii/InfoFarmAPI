@@ -25,9 +25,8 @@ public class CropData {
     private double cost;
     private double kilos;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "crop_id", nullable = false)
-    @JsonIgnore
     private Crop crop;
 
     @ManyToOne(fetch = FetchType.LAZY)

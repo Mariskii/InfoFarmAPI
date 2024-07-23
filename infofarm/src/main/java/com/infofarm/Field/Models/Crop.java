@@ -1,5 +1,6 @@
 package com.infofarm.Field.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +31,4 @@ public class Crop {
     @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CropNeeds> cropNeeds = new ArrayList<>();
     //El priblema era del set que habia antes TODO: investigar diferencia entre List y Set
-
-    @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<CropData> cropData = new ArrayList<>();
 }
