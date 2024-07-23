@@ -23,7 +23,9 @@ public class Crop {
 
     private String cropDescription;
 
-    private String cropImage;
+    private String imageURL;
+
+    private String image_public_id;
 
     @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CropNeeds> cropNeeds = new ArrayList<>();

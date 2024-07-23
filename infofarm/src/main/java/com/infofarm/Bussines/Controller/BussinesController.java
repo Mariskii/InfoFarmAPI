@@ -27,7 +27,7 @@ public class BussinesController {
     }
 
     @PostMapping("create-bussines")
-    public ResponseEntity<BussinesResponseDTO> createBussines(@RequestParam("bussinesName") String bussines, @RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<BussinesResponseDTO> createBussines(@RequestParam("bussinesName") String bussines, @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
         return ResponseEntity.status(HttpStatus.CREATED).body(bussinesService.createBussines(bussines, file));
     }
 

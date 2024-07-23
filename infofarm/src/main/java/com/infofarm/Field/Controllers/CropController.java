@@ -1,6 +1,8 @@
 package com.infofarm.Field.Controllers;
 
+import com.infofarm.Field.Dto.Request.Crop.CreateCropDTO;
 import com.infofarm.Field.Dto.Request.CropData.RequestCropDataDTO;
+import com.infofarm.Field.Dto.Response.Crop.CropResponseDTO;
 import com.infofarm.Field.Models.CropData;
 import com.infofarm.Field.Dto.Request.Crop.UpdateCropDTO;
 import com.infofarm.Field.Dto.Request.CropNeeds.CreateCropNeedDTO;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 
@@ -25,19 +28,21 @@ public class CropController {
     CropServiceImplementation cropServiceImpl;
 
     @GetMapping("get-crop/{cropId}")
-    public Crop getCropById(@PathVariable Long cropId) throws IdNotFoundException {
+    public CropResponseDTO getCropById(@PathVariable Long cropId) throws IdNotFoundException {
         return cropServiceImpl.findById(cropId);
     }
 
     @PostMapping("create-crop")
-    public ResponseEntity<?> saveCrop(@RequestBody Crop crop) {
-        cropServiceImpl.save(crop);
-        return new ResponseEntity<>(crop, HttpStatus.CREATED);
+    public ResponseEntity<?> saveCrop(@RequestPart(value = "file", required = false) MultipartFile file,
+            @Valid @RequestPart CreateCropDTO crop) {
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(cropServiceImpl.save(crop, file));
     }
 
     @PutMapping("update-crop")
-    public ResponseEntity<?> updateCrop(@Valid @RequestBody UpdateCropDTO cropRequestDTO) throws IdNotFoundException {
-        cropServiceImpl.update(cropRequestDTO);
+    public ResponseEntity<?> updateCrop(@Valid @RequestBody UpdateCropDTO cropRequestDTO,
+                                        @RequestParam(value = "file", required = false) MultipartFile file) throws IdNotFoundException {
+        cropServiceImpl.update(cropRequestDTO, file);
         return new ResponseEntity<>(cropRequestDTO, HttpStatus.OK);
     }
 
