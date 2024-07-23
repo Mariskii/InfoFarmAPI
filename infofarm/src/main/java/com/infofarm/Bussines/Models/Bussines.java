@@ -28,9 +28,6 @@ public class Bussines {
 
     private String image_public_id;
 
-    @OneToMany(mappedBy = "bussines", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Tasks> tasks = new HashSet<>();
-
     //TODO: Añadir relacion entre negocio y plantaciones
     @OneToMany(mappedBy = "bussines", cascade = CascadeType.ALL)
     private List<Plantation> plantations = new ArrayList<>();

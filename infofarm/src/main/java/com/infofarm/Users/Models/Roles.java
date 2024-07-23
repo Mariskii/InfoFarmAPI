@@ -1,4 +1,4 @@
-package com.infofarm.Models.Users;
+package com.infofarm.Users.Models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -89,9 +89,9 @@ public class CropController {
         return cropServiceImpl.getCropDataByPlantationId(plantationId);
     }
 
-    @GetMapping("plantation/{plantationId}/crop-data")
-    public CropDataResponseDTO getCropDataById(@PathVariable Long plantationId) throws IdNotFoundException {
-        return cropServiceImpl.getCropDataById(plantationId);
+    @GetMapping("crop-data/{Id}")
+    public CropDataResponseDTO getCropDataById(@PathVariable Long Id) throws IdNotFoundException {
+        return cropServiceImpl.getCropDataById(Id);
     }
 
     @PutMapping("crop-data/update/crop/{cropId}")

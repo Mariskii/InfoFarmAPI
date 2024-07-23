@@ -1,5 +1,6 @@
-package com.infofarm.Bussines.Models;
+package com.infofarm.Users.Models;
 
+import com.infofarm.Bussines.Models.Bussines;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

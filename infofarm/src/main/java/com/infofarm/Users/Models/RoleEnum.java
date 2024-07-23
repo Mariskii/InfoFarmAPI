@@ -1,4 +1,4 @@
-package com.infofarm.Models.Users;
+package com.infofarm.Users.Models;
 
 public enum RoleEnum {
     ADMIN,
