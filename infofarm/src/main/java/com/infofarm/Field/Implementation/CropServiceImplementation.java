@@ -4,6 +4,7 @@ import com.infofarm.Field.Dto.Request.Crop.CreateCropDTO;
 import com.infofarm.Field.Dto.Request.CropData.RequestCropDataDTO;
 import com.infofarm.Field.Dto.Response.Crop.CropResponseDTO;
 import com.infofarm.Field.Dto.Response.CropData.CropDataResponseDTO;
+import com.infofarm.Field.Dto.Response.CropNeed.CropNeedResponseDTO;
 import com.infofarm.Field.Models.CropData;
 import com.infofarm.Field.Models.Plantation;
 import com.infofarm.Field.Repository.CropDataRepository;
@@ -132,12 +133,16 @@ public class CropServiceImplementation implements CropService {
 
     @Override
     public void addCropNeed(CreateCropNeedDTO cropNeedsDTO, Long cropId) throws IdNotFoundException {
-        Crop crop = cropRepository.findById(cropId).orElseThrow(() -> new IdNotFoundException("The crop not found with id: " + cropId));
+
+
 
         CropNeeds cropNeed = CropNeeds.builder()
                 .needName(cropNeedsDTO.getNeedName())
                 .description(cropNeedsDTO.getDescription())
-                .crop(crop)
+                .crop(cropDataRepository.findById(cropId).orElseThrow( () ->
+                        new IdNotFoundException("The crop not found with id: " + cropId)
+                    )
+                )
                 .build();
 
         cropNeedsRepository.save(cropNeed);
@@ -217,6 +222,13 @@ public class CropServiceImplementation implements CropService {
                 .build();
     }
 
+    private CropNeedResponseDTO createCropNeedResponseDTO(CropNeeds cropNeed) {
+        return CropNeedResponseDTO.builder()
+                .needName(cropNeed.getNeedName())
+                .description(cropNeed.getDescription())
+                .build();
+    }
+
     private CropDataResponseDTO createCropDataResponseDTO(CropData cropData) {
         return CropDataResponseDTO.builder()
                 .id(cropData.getId())
@@ -226,6 +238,10 @@ public class CropServiceImplementation implements CropService {
                 .collection_date(cropData.getCollection_date())
                 .planting_date(cropData.getPlanting_date())
                 .crop(createCropResponseDTO(cropData.getCrop()))
+                .needs(cropData.getCropNeeds()
+                        .stream()
+                        .map(this::createCropNeedResponseDTO).toList()
+                )
                 .build();
     }
 }

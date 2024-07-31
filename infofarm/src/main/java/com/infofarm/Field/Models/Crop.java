@@ -28,7 +28,4 @@ public class Crop {
 
     private String image_public_id;
 
-    @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<CropNeeds> cropNeeds = new ArrayList<>();
-    //El priblema era del set que habia antes TODO: investigar diferencia entre List y Set
 }

@@ -7,7 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -33,4 +35,7 @@ public class CropData {
     @JoinColumn(name = "plantation_id", nullable = false)
     @JsonIgnore
     private Plantation plantation;
+
+    @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL)
+    private List<CropNeeds> cropNeeds = new ArrayList<>();
 }

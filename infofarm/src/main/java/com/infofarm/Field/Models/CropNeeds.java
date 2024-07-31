@@ -20,8 +20,8 @@ public class CropNeeds {
     private String needName;
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_crop", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "id_crop_data", nullable = false)
     @JsonIgnore
-    private Crop crop;
+    private CropData crop;
 }
