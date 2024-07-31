@@ -7,6 +7,7 @@ import com.infofarm.Users.Models.Roles;
 import com.infofarm.Users.Models.UserEntity;
 import com.infofarm.Users.Repository.RolesRepository;
 import com.infofarm.Users.Repository.UserRepository;
+import com.infofarm.Users.Utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,6 +37,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
     RolesRepository rolesRepository;
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -69,10 +73,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
         Authentication authentication = this.authentication(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        //TODO: IMPLEMENTAR JWT
-        //String accessToken = jwtUtils.createToken(authentication);
 
-        AuthResponse authResponse = new AuthResponse(username,"User logged succes"/*, accessToken*/, true);
+        String accessToken = jwtUtils.createToken(authentication);
+
+        AuthResponse authResponse = new AuthResponse(username,"User logged succes", accessToken, true);
         return authResponse;
     }
 
@@ -129,8 +133,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
         Authentication auth = new UsernamePasswordAuthenticationToken(userCreated.getUsername(), userCreated.getPassword(), grantedAuthorities);
 
         //TODO: Crear Token
-        //String accessToken = jwtUtils.createToken(auth);
+        String accessToken = jwtUtils.createToken(auth);
 
-        return new AuthResponse(userCreated.getUsername(), "User logged succes", /*accessToken,*/ true);
+        return new AuthResponse(userCreated.getUsername(), "User logged succes", accessToken, true);
     }
 }
