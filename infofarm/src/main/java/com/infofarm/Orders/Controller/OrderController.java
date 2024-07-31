@@ -33,7 +33,7 @@ public class OrderController {
         return orderService.updateOrder(order, id);
     }
 
-    @PutMapping("/update-product")
+    @PutMapping("update-order-product")
     public boolean updateOrderProducts(@Valid @RequestBody UpdateOrderProductDTO order) throws IdNotFoundException, NotEnoughtQuantityException {
         return orderService.updateOrderProduct(order);
     }
@@ -42,6 +42,4 @@ public class OrderController {
     public void deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);
     }
-
-    //TODO: Endpoint para añadir el cobro a facturación
 }

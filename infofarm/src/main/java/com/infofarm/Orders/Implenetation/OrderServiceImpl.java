@@ -2,6 +2,8 @@ package com.infofarm.Orders.Implenetation;
 
 import com.infofarm.Exception.Errors.IdNotFoundException;
 import com.infofarm.Exception.Errors.NotEnoughtQuantityException;
+import com.infofarm.Facturation.Models.Invoice;
+import com.infofarm.Facturation.Repository.InvoicesRepository;
 import com.infofarm.Orders.Dto.Request.CropDataOrderDTO;
 import com.infofarm.Orders.Dto.Request.OrderDTO;
 import com.infofarm.Orders.Dto.Request.UpdateOrderProductDTO;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -33,6 +36,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private CropDataRepository cropDataRepository;
+
+    @Autowired
+    private InvoicesRepository invoicesRepository;
 
     @Override
     @Transactional
@@ -94,6 +100,25 @@ public class OrderServiceImpl implements OrderService {
         actualCropOrder.setOrderDate(cropOrder.orderDate());
         actualCropOrder.setDelivered(cropOrder.delivered());
         actualCropOrder.setPaid(cropOrder.paid());
+
+        if(cropOrder.paid()) {
+
+            double price = 0;
+
+            for(OrderCropData data : actualCropOrder.getProducts()) {
+                price = price + data.getPrice();
+            }
+
+            Invoice newInvoice = Invoice.builder()
+                    .name("Pedido para "+actualCropOrder.getCustomer().getCostumerName())
+                    .payDate(new Date())
+                    .price(price)
+                    .paid(true)
+                    .creationBill(new Date())
+                    .build();
+
+            invoicesRepository.save(newInvoice);
+        }
 
         orderRepository.save(actualCropOrder);
 
