@@ -1,5 +1,6 @@
 package com.infofarm.Facturation.Controller;
 
+import com.infofarm.Exception.Errors.IdNotFoundException;
 import com.infofarm.Facturation.Dto.Request.CreateCostDTO;
 import com.infofarm.Facturation.Dto.Request.CreateInvoiceDTO;
 import com.infofarm.Facturation.Dto.Response.MonthFacturationDTO;
@@ -8,10 +9,9 @@ import com.infofarm.Facturation.Models.Cost;
 import com.infofarm.Facturation.Models.Invoice;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 
 @RestController
 @RequestMapping("api/facturation")
@@ -27,11 +27,21 @@ public class FacturationController {
 
     @PostMapping("add-cost")
     public ResponseEntity<Cost> addCost( @Valid @RequestBody CreateCostDTO costDTO) {
-        return ResponseEntity.ok(facturationService.addCost(costDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(facturationService.addCost(costDTO));
     }
 
     @PostMapping("add-invoice")
     public ResponseEntity<Invoice> addCost(@Valid @RequestBody CreateInvoiceDTO invoiceDTO) {
-        return ResponseEntity.ok(facturationService.addInvoice(invoiceDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(facturationService.addInvoice(invoiceDTO));
+    }
+
+    @PutMapping("update-invoice")
+    public ResponseEntity<Invoice> updateInvoice(@Valid @RequestBody Invoice invoice) throws IdNotFoundException {
+        return ResponseEntity.ok(facturationService.updateInvoice(invoice));
+    }
+
+    @PutMapping("update-cost")
+    public ResponseEntity<Cost> updateInvoice(@Valid @RequestBody Cost cost) throws IdNotFoundException {
+        return ResponseEntity.ok(facturationService.updateCost(cost));
     }
 }

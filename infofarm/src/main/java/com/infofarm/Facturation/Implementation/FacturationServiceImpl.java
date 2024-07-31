@@ -1,5 +1,6 @@
 package com.infofarm.Facturation.Implementation;
 
+import com.infofarm.Exception.Errors.IdNotFoundException;
 import com.infofarm.Facturation.Dto.Request.CreateCostDTO;
 import com.infofarm.Facturation.Dto.Request.CreateInvoiceDTO;
 import com.infofarm.Facturation.Dto.Response.MonthFacturationDTO;
@@ -11,9 +12,6 @@ import com.infofarm.Facturation.Service.FacturationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Calendar;
-import java.util.Date;
 
 @Service
 public class FacturationServiceImpl implements FacturationService {
@@ -42,7 +40,6 @@ public class FacturationServiceImpl implements FacturationService {
                 .buyDate(cost.buyDate())
                 .description(cost.description())
                 .price(cost.price())
-                .purchaseType(cost.purchaseType())
                 .build();
 
         return costRepository.save(newCost);
@@ -62,5 +59,35 @@ public class FacturationServiceImpl implements FacturationService {
                 .build();
 
         return invoicesRepository.save(newInvoice);
+    }
+
+    @Override
+    public Cost updateCost(Cost cost) throws IdNotFoundException{
+
+        Cost updateCost = costRepository.findById(cost.getId()).orElseThrow(() -> new IdNotFoundException("Cost with id: "+cost.getId()+" not found"));
+
+        updateCost.setQuantity(cost.getQuantity());
+        updateCost.setCostName(cost.getCostName());
+        updateCost.setDescription(cost.getDescription());
+        updateCost.setPrice(cost.getPrice());
+        updateCost.setBuyDate(cost.getBuyDate());
+
+        return costRepository.save(updateCost);
+    }
+
+    @Override
+    public Invoice updateInvoice(Invoice invoice) throws IdNotFoundException {
+
+        Invoice updateInvoice = invoicesRepository.findById(invoice.getId()).orElseThrow(() -> new IdNotFoundException("Invoice with id "+invoice.getId()+" not found"));
+
+        updateInvoice.setName(invoice.getName());
+        updateInvoice.setDescription(invoice.getDescription());
+        updateInvoice.setQuantity(invoice.getQuantity());
+        updateInvoice.setPrice(invoice.getPrice());
+        updateInvoice.setDueDate(invoice.getDueDate());
+        updateInvoice.setCreationBill(invoice.getCreationBill());
+        updateInvoice.setPaid(invoice.isPaid());
+
+        return invoicesRepository.save(updateInvoice);
     }
 }

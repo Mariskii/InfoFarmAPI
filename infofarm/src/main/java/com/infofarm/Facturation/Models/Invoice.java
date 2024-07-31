@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,19 +23,20 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String name;
 
     private String description;
 
-    private boolean paid;
+    private boolean paid = false;
 
-    private Date creationBill;
+    private Date creationBill = new Date();
 
     private Date payDate;
 
     private Date dueDate;
 
-    private double price;
+    private double price = 0.0;
 
-    private double quantity;
+    private double quantity = 0.0;
 }
