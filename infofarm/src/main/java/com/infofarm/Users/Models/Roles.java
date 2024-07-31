@@ -2,6 +2,7 @@ package com.infofarm.Users.Models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Roles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
