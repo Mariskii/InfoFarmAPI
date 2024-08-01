@@ -6,5 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public record AuthCreateUserDTO(@NotBlank String username,
                                 @NotBlank String password,
-                                @Valid AuthCreateRoleDTO roleRequest) {
+                                @Valid AuthCreateRoleDTO roleRequest
+                                ) {
 }

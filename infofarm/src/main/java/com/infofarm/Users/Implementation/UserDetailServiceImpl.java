@@ -1,5 +1,6 @@
 package com.infofarm.Users.Implementation;
 
+import com.infofarm.Images.Implementation.CloudinaryServiceImpl;
 import com.infofarm.Users.Dto.Request.AuthCreateUserDTO;
 import com.infofarm.Users.Dto.Request.AuthLoginRequest;
 import com.infofarm.Users.Dto.Response.AuthResponse;
@@ -19,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,6 +30,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
+
+    private final String FOLDER_NAME = "userPics";
 
     @Autowired
     UserRepository userRepository;
@@ -40,6 +44,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    private CloudinaryServiceImpl cloudinaryService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -97,7 +104,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
     }
 
-    public AuthResponse createUser(AuthCreateUserDTO authCreateUser){
+    public AuthResponse createUser(AuthCreateUserDTO authCreateUser, MultipartFile file){
         //Obtener datos del usuario
         String username = authCreateUser.username();
         String password = authCreateUser.password();
@@ -119,6 +126,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 .credentialsNonExpired(true)
                 .build();
 
+        if(file != null) {
+            String[] imageData = cloudinaryService.uploadFile(file,FOLDER_NAME);
+            userEntity.setImageURL(imageData[0]);
+            userEntity.setImage_public_id(imageData[1]);
+        }
+
         UserEntity userCreated = userRepository.save(userEntity);
 
         ArrayList<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
@@ -132,7 +145,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         Authentication auth = new UsernamePasswordAuthenticationToken(userCreated.getUsername(), userCreated.getPassword(), grantedAuthorities);
 
-        //TODO: Crear Token
         String accessToken = jwtUtils.createToken(auth);
 
         return new AuthResponse(userCreated.getUsername(), "User logged succes", accessToken, true);
