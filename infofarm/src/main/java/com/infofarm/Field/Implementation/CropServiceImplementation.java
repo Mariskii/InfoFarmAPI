@@ -5,6 +5,7 @@ import com.infofarm.Field.Dto.Request.CropData.RequestCropDataDTO;
 import com.infofarm.Field.Dto.Response.Crop.CropResponseDTO;
 import com.infofarm.Field.Dto.Response.CropData.CropDataResponseDTO;
 import com.infofarm.Field.Dto.Response.CropNeed.CropNeedResponseDTO;
+import com.infofarm.Field.Mapper.CropMapper;
 import com.infofarm.Field.Models.CropData;
 import com.infofarm.Field.Models.Plantation;
 import com.infofarm.Field.Repository.CropDataRepository;
@@ -71,7 +72,7 @@ public class CropServiceImplementation implements CropService {
 
         crop = cropRepository.save(crop);
 
-        return createCropResponseDTO(crop);
+        return CropMapper.createCropResponseDTO(crop);
     }
 
     @Override
@@ -93,7 +94,7 @@ public class CropServiceImplementation implements CropService {
 
         crop = cropRepository.save(crop);
 
-        return createCropResponseDTO(crop);
+        return CropMapper.createCropResponseDTO(crop);
     }
 
     @Override
@@ -110,14 +111,14 @@ public class CropServiceImplementation implements CropService {
 
         Crop crop = cropRepository.findById(id).orElseThrow(() -> new IdNotFoundException("The crop not found with id: " + id));
 
-        return createCropResponseDTO(crop);
+        return CropMapper.createCropResponseDTO(crop);
     }
 
     @Override
     public Page<CropResponseDTO> getCrops(int page, int size) {
         Pageable pageable = PageRequest.of(page,size);
         Page<Crop> cropsPage = cropRepository.findAll(pageable);
-        return cropsPage.map(this::createCropResponseDTO);
+        return cropsPage.map(CropMapper::createCropResponseDTO);
     }
 
     @Override
@@ -166,7 +167,7 @@ public class CropServiceImplementation implements CropService {
     @Override
     public List<CropDataResponseDTO> getCropDataByPlantationId(Long id) throws IdNotFoundException {
         Plantation p = plantationRepository.findById(id).orElseThrow(() -> new IdNotFoundException("The plantation not found with id: " + id));
-        return p.getCropData().stream().map(this::createCropDataResponseDTO).toList();
+        return p.getCropData().stream().map(CropMapper::createCropDataResponseDTO).toList();
     }
 
     @Override
@@ -175,7 +176,7 @@ public class CropServiceImplementation implements CropService {
         CropData cropData = cropDataRepository.findById(id)
                 .orElseThrow(() -> new IdNotFoundException("Crop Data with the ID "+id+" not found"));
 
-        return createCropDataResponseDTO(cropData);
+        return CropMapper.createCropDataResponseDTO(cropData);
     }
 
     @Override
@@ -212,36 +213,5 @@ public class CropServiceImplementation implements CropService {
     @Override
     public void deleteCropData(Long id) throws IdNotFoundException {
         cropDataRepository.deleteById(id);
-    }
-
-    private CropResponseDTO createCropResponseDTO(Crop crop) {
-        return CropResponseDTO.builder()
-                .cropName(crop.getCropName())
-                .cropDescription(crop.getCropDescription())
-                .imageURL(crop.getImageURL())
-                .build();
-    }
-
-    private CropNeedResponseDTO createCropNeedResponseDTO(CropNeeds cropNeed) {
-        return CropNeedResponseDTO.builder()
-                .needName(cropNeed.getNeedName())
-                .description(cropNeed.getDescription())
-                .build();
-    }
-
-    private CropDataResponseDTO createCropDataResponseDTO(CropData cropData) {
-        return CropDataResponseDTO.builder()
-                .id(cropData.getId())
-                .kilo_price(cropData.getKilo_price())
-                .kilos(cropData.getKilos())
-                .cost(cropData.getCost())
-                .collection_date(cropData.getCollection_date())
-                .planting_date(cropData.getPlanting_date())
-                .crop(createCropResponseDTO(cropData.getCrop()))
-                .needs(cropData.getCropNeeds()
-                        .stream()
-                        .map(this::createCropNeedResponseDTO).toList()
-                )
-                .build();
     }
 }
