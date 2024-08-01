@@ -19,7 +19,8 @@ public class AuthenticationController {
     UserDetailServiceImpl userDetailService;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<AuthResponse> register(@RequestPart @Valid AuthCreateUserDTO authCreateUser, @RequestPart MultipartFile file) {
+    public ResponseEntity<AuthResponse> register(@RequestPart @Valid AuthCreateUserDTO authCreateUser,
+                                                 @RequestPart(value = "file", required = false) MultipartFile file) {
         return new ResponseEntity<>(userDetailService.createUser(authCreateUser, file), HttpStatus.CREATED);
     }
 

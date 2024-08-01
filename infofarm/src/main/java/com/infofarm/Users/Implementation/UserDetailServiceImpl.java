@@ -83,7 +83,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         String accessToken = jwtUtils.createToken(authentication);
 
-        AuthResponse authResponse = new AuthResponse(username,"User logged succes", accessToken, true);
+        AuthResponse authResponse = new AuthResponse("User logged succes", accessToken);
         return authResponse;
     }
 
@@ -147,6 +147,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         String accessToken = jwtUtils.createToken(auth);
 
-        return new AuthResponse(userCreated.getUsername(), "User logged succes", accessToken, true);
+        return new AuthResponse("User logged succes", accessToken);
     }
 }

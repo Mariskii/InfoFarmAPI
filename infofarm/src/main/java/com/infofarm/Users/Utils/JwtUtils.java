@@ -6,7 +6,6 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
-import com.infofarm.Users.Implementation.UserDetailServiceImpl;
 import com.infofarm.Users.Models.UserEntity;
 import com.infofarm.Users.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -33,7 +31,6 @@ public class JwtUtils {
     UserRepository userRepository;
 
     public String createToken(Authentication authentication) {
-        Algorithm algorithm = Algorithm.HMAC256(privateKey);
 
         String username = authentication.getName();
 
@@ -48,15 +45,14 @@ public class JwtUtils {
 
         //Generando JWT
         return JWT.create()
-                //.withIssuer(userGenerator)
+                .withIssuer(userGenerator)
                 .withSubject(username) //a quien se le genera el token
                 .withClaim("authorities",authorities)
                 .withClaim("userImage", userImage)
                 .withIssuedAt(new Date()) //Fecha en la que se genera el token
-                .withExpiresAt(new Date(System.currentTimeMillis() + 180000)) //Cuando expira
-                //.withJWTId(UUID.randomUUID().toString()) //Id del jwt
+                .withExpiresAt(new Date(System.currentTimeMillis() + 60000L * 60 * 24 * 31)) //Cuando expira
                 .withNotBefore(new Date(System.currentTimeMillis())) //A partir de cuando va a ser valido el token
-                .sign(algorithm);
+                .sign(Algorithm.HMAC256(privateKey));
     }
 
     public DecodedJWT verifyToken(String token) {
