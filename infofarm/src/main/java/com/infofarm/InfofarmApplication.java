@@ -40,7 +40,7 @@ public class InfofarmApplication {
 					.build();
 
 			Roles roleAdmin = Roles.builder()
-					.roleEnum(RoleEnum.ADMIN)
+					.roleEnum(RoleEnum.BOSS)
 					.permissions(Set.of(createPermission, readPermission, updatePermission,deleteePermission))
 					.build();
 
