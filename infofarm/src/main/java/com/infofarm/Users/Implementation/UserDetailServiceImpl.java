@@ -1,9 +1,9 @@
 package com.infofarm.Users.Implementation;
 
 import com.infofarm.Images.Implementation.CloudinaryServiceImpl;
-import com.infofarm.Users.Dto.Request.AuthCreateUserDTO;
-import com.infofarm.Users.Dto.Request.AuthLoginRequest;
-import com.infofarm.Users.Dto.Response.AuthResponse;
+import com.infofarm.Users.Dto.Request.Auth.AuthCreateUserDTO;
+import com.infofarm.Users.Dto.Request.Auth.AuthLoginRequest;
+import com.infofarm.Users.Dto.Response.Auth.AuthResponse;
 import com.infofarm.Users.Models.Roles;
 import com.infofarm.Users.Models.UserEntity;
 import com.infofarm.Users.Repository.RolesRepository;
@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {

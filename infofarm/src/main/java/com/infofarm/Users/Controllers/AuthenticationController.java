@@ -1,8 +1,8 @@
 package com.infofarm.Users.Controllers;
 
-import com.infofarm.Users.Dto.Request.AuthCreateUserDTO;
-import com.infofarm.Users.Dto.Request.AuthLoginRequest;
-import com.infofarm.Users.Dto.Response.AuthResponse;
+import com.infofarm.Users.Dto.Request.Auth.AuthCreateUserDTO;
+import com.infofarm.Users.Dto.Request.Auth.AuthLoginRequest;
+import com.infofarm.Users.Dto.Response.Auth.AuthResponse;
 import com.infofarm.Users.Implementation.UserDetailServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

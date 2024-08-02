@@ -1,4 +1,4 @@
-package com.infofarm.Users.Dto.Request;
+package com.infofarm.Users.Dto.Request.Auth;
 
 import jakarta.validation.constraints.NotBlank;
 

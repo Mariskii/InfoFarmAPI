@@ -1,8 +1,7 @@
-package com.infofarm.Users.Dto.Request;
+package com.infofarm.Users.Dto.Request.Auth;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.web.multipart.MultipartFile;
 
 public record AuthCreateUserDTO(@NotBlank String username,
                                 @NotBlank String password,
