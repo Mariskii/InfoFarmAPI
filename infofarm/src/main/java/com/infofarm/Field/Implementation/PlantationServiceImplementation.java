@@ -38,17 +38,18 @@ public class PlantationServiceImplementation implements PlantationService {
     }
 
     @Override
-    public void addPlantation(RequestPlantationDTO plantation, Long bussinesId) throws IdNotFoundException {
+    public PlantationResponseDTO addPlantation(RequestPlantationDTO plantation, Long bussinesId) throws IdNotFoundException {
 
         Bussines bussines = bussinesRepository.findById(bussinesId).orElseThrow(() -> new IdNotFoundException("The bussines not found with id: " + bussinesId));
 
         Plantation newPlantation = Plantation.builder()
                 .name(plantation.getName())
                 .description(plantation.getDescription())
+                .location(plantation.getLocation())
                 .bussines(bussines)
                 .build();
 
-        plantationRepository.save(newPlantation);
+        return createPlantationResponseDTO(plantationRepository.save(newPlantation));
     }
 
     //todo: implementar actualización

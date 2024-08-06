@@ -30,8 +30,7 @@ public class PlantationController {
 
     @PostMapping("add-plantation/bussines/{bussinesId}")
     public ResponseEntity<?> addPlantation(@RequestBody RequestPlantationDTO createPlantationDTO, @PathVariable Long bussinesId) throws IdNotFoundException {
-        plantationService.addPlantation(createPlantationDTO, bussinesId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(plantationService.addPlantation(createPlantationDTO, bussinesId));
     }
 
     @DeleteMapping("delete-plantation/{plantationId}")
