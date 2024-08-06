@@ -1,5 +1,6 @@
 package com.infofarm.Users.Models;
 
+import com.infofarm.Bussines.Models.Bussines;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +23,7 @@ public class UserEntity {
     private String username;
     private String password;
 
-    @Column(name = "is_Eenabled")
+    @Column(name = "is_Enabled")
     private boolean isEnabled;
     @Column(name = "account_No_Expired")
     private boolean accountNonExpired;
@@ -39,4 +40,7 @@ public class UserEntity {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> roles = new HashSet<>();//El set no permite duplicados
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Bussines bussines;
 }

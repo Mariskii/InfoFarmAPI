@@ -38,13 +38,12 @@ public class JwtTokenValidator extends OncePerRequestFilter /*Ejecuta filtro por
         if(token != null && token.startsWith("Bearer ")) {
             token = token.substring(7);
 
-            System.out.println();
-
             DecodedJWT decoded = jwtUtils.verifyToken(token);
 
             //CONCEDER ACCESO AL USUARIO
             String username = jwtUtils.extractUser(decoded);
             String stringAuthorities = jwtUtils.getClaim(decoded,"authorities").asString();
+            Long empresId = jwtUtils.getClaim(decoded,"employeeId").asLong();
 
             //Devolver los permisos separados por coma
             Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities);

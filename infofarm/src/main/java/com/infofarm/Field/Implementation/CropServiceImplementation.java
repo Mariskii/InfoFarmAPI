@@ -25,6 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -106,6 +109,7 @@ public class CropServiceImplementation implements CropService {
 
     }
 
+    //todo: Testeando privacidad de enpoints de los usuarios
     @Override
     public CropResponseDTO findById(Long id) throws IdNotFoundException {
 

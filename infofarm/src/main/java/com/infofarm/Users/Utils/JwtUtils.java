@@ -39,16 +39,11 @@ public class JwtUtils {
                 .map(GrantedAuthority::getAuthority) //Lo miso que grantedAuthority -> grantedAuthority.getAuthority()
                 .collect(Collectors.joining(","));
 
-        String userImage = userRepository.findByUsername(username)
-                .map(UserEntity::getImageURL)
-                .orElse(null);
-
         //Generando JWT
         return JWT.create()
                 .withIssuer(userGenerator)
                 .withSubject(username) //a quien se le genera el token
                 .withClaim("authorities",authorities)
-                .withClaim("userImage", userImage)
                 .withIssuedAt(new Date()) //Fecha en la que se genera el token
                 .withExpiresAt(new Date(System.currentTimeMillis() + 60000L * 60 * 24 * 31)) //Cuando expira
                 .withNotBefore(new Date(System.currentTimeMillis())) //A partir de cuando va a ser valido el token
