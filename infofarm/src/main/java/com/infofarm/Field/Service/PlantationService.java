@@ -16,7 +16,7 @@ public interface PlantationService {
 
     PlantationResponseDTO addPlantation(RequestPlantationDTO plantation, Long bussinesId) throws IdNotFoundException;
 
-    void updatePlantation(RequestPlantationDTO plantation, Long plantationId) throws IdNotFoundException;
+    Plantation updatePlantation(Plantation plantation) throws IdNotFoundException;
 
     void deletePlantation(Long id);
 }

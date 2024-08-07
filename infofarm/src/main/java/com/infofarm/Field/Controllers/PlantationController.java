@@ -33,15 +33,14 @@ public class PlantationController {
         return ResponseEntity.ok().body(plantationService.addPlantation(createPlantationDTO, bussinesId));
     }
 
+    @PutMapping("edit-plantation")
+    public ResponseEntity<Plantation> updatePlantation(@RequestBody Plantation updatedPlantation) throws IdNotFoundException {
+        return ResponseEntity.ok().body(plantationService.updatePlantation(updatedPlantation));
+    }
+
     @DeleteMapping("delete-plantation/{plantationId}")
     public ResponseEntity<?> deletePlantation(@PathVariable Long plantationId) throws IdNotFoundException {
         plantationService.deletePlantation(plantationId);
-        return ResponseEntity.ok().build();
-    }
-
-    @PutMapping("{plantationId}/update")
-    public ResponseEntity<?> updatePlantation(@RequestBody RequestPlantationDTO plantationDTO, @PathVariable Long plantationId) throws IdNotFoundException {
-        plantationService.updatePlantation(plantationDTO, plantationId);
         return ResponseEntity.ok().build();
     }
 
