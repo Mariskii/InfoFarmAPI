@@ -4,8 +4,9 @@ import lombok.Builder;
 
 @Builder
 public record CropResponseDTO(
+        Long id,
         String cropName,
         String cropDescription,
-        String imageURL
+        String cropImage
 ) {
 }

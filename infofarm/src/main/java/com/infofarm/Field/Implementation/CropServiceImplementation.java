@@ -65,8 +65,6 @@ public class CropServiceImplementation implements CropService {
                 .cropDescription(cropDTO.cropDescription())
                 .build();
 
-        System.out.println(file);
-
         if(file != null) {
             String[] imageData = cloudinaryService.uploadFile(file,FOLDER_NAME);
             crop.setImageURL(imageData[0]);
@@ -89,7 +87,9 @@ public class CropServiceImplementation implements CropService {
         crop.setCropDescription(cropRequestDTO.cropDescription());
 
         if(file != null) {
-            cloudinaryService.deleteFile(crop.getImage_public_id());
+            if(crop.getImage_public_id() != null)
+                cloudinaryService.deleteFile(crop.getImage_public_id());
+
             String[] imageData = cloudinaryService.uploadFile(file,FOLDER_NAME);
             crop.setImageURL(imageData[0]);
             crop.setImage_public_id(imageData[1]);

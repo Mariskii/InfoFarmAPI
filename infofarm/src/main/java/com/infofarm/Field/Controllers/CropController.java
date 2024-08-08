@@ -49,10 +49,10 @@ public class CropController {
     }
 
     @PutMapping("update-crop")
-    public ResponseEntity<?> updateCrop(@Valid @RequestBody UpdateCropDTO cropRequestDTO,
-                                        @RequestParam(value = "file", required = false) MultipartFile file) throws IdNotFoundException {
-        cropServiceImpl.update(cropRequestDTO, file);
-        return new ResponseEntity<>(cropRequestDTO, HttpStatus.OK);
+    public ResponseEntity<?> updateCrop(@Valid @RequestPart UpdateCropDTO cropRequestDTO,
+                                        @RequestPart(value = "file", required = false) MultipartFile file) throws IdNotFoundException {
+
+        return new ResponseEntity<>(cropServiceImpl.update(cropRequestDTO, file), HttpStatus.OK);
     }
 
     @DeleteMapping("delete-crop/{cropId}")

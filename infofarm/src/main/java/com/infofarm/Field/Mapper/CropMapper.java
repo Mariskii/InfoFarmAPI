@@ -11,9 +11,10 @@ public class CropMapper {
 
     public static CropResponseDTO createCropResponseDTO(Crop crop) {
         return CropResponseDTO.builder()
+                .id(crop.getId())
                 .cropName(crop.getCropName())
                 .cropDescription(crop.getCropDescription())
-                .imageURL(crop.getImageURL())
+                .cropImage(crop.getImageURL())
                 .build();
     }
 

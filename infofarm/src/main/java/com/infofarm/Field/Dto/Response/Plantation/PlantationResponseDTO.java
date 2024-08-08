@@ -5,7 +5,7 @@ import lombok.Builder;
 @Builder
 public record PlantationResponseDTO(
         Long id,
-        String plantationName,
+        String name,
         String description,
         String location
 ) {

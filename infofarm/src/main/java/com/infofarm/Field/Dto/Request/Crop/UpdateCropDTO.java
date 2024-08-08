@@ -8,6 +8,5 @@ import lombok.Data;
 public record UpdateCropDTO(
         @NotNull(message = "ID is required") Long id,
         @NotBlank(message = "Crop name can't be empty") String cropName,
-        @NotEmpty(message = "Crop description is required") String cropDescription,
-        @NotEmpty(message = "Crop image is required") String cropImage
+        String cropDescription
 ) {}
