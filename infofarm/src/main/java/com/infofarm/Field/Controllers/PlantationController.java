@@ -1,6 +1,7 @@
 package com.infofarm.Field.Controllers;
 
 import com.infofarm.Field.Dto.Request.Plantation.RequestPlantationDTO;
+import com.infofarm.Field.Dto.Response.Plantation.PlantationFullResponseDTO;
 import com.infofarm.Field.Dto.Response.Plantation.PlantationResponseDTO;
 import com.infofarm.Field.Models.Plantation;
 import com.infofarm.Field.Service.PlantationService;
@@ -18,7 +19,7 @@ public class PlantationController {
     PlantationService plantationService;
 
     @GetMapping("get-plantation/{plantationId}")
-    public Plantation getPlantation(@PathVariable Long plantationId) throws IdNotFoundException {
+    public PlantationFullResponseDTO getPlantation(@PathVariable Long plantationId) throws IdNotFoundException {
         return plantationService.getPlantation(plantationId);
     }
 

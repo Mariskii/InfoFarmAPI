@@ -38,7 +38,7 @@ public interface CropService {
 
     void deleteCropNeed(Long id) throws IdNotFoundException;
 
-    List<CropDataResponseDTO> getCropDataByPlantationId(Long id) throws IdNotFoundException;
+    Page<CropDataResponseDTO> getCropDataByPlantationId(Long id, int page, int size) throws IdNotFoundException;
 
     CropDataResponseDTO getCropDataById(Long id) throws IdNotFoundException;
 

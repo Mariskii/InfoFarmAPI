@@ -1,6 +1,7 @@
 package com.infofarm.Field.Dto.Response.CropData;
 
 import com.infofarm.Field.Dto.Response.Crop.CropResponseDTO;
+import com.infofarm.Field.Dto.Response.Crop.CropResponseReducedDTO;
 import com.infofarm.Field.Dto.Response.CropNeed.CropNeedResponseDTO;
 import lombok.Builder;
 
@@ -15,7 +16,7 @@ public record CropDataResponseDTO(
         double kilo_price,
         double cost,
         double kilos,
-        CropResponseDTO crop,
+        CropResponseReducedDTO crop,
         List<CropNeedResponseDTO> needs
 ) {
 }

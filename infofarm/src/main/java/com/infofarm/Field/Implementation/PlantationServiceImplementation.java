@@ -3,10 +3,14 @@ package com.infofarm.Field.Implementation;
 import com.infofarm.Bussines.Models.Bussines;
 import com.infofarm.Bussines.Repository.BussinesRepository;
 import com.infofarm.Field.Dto.Request.Plantation.RequestPlantationDTO;
+import com.infofarm.Field.Dto.Response.Plantation.PlantationFullResponseDTO;
 import com.infofarm.Field.Dto.Response.Plantation.PlantationResponseDTO;
+import com.infofarm.Field.Mapper.CropMapper;
+import com.infofarm.Field.Mapper.PlantationMapper;
 import com.infofarm.Field.Models.Crop;
 import com.infofarm.Field.Models.CropData;
 import com.infofarm.Field.Models.Plantation;
+import com.infofarm.Field.Repository.CropRepository;
 import com.infofarm.Field.Repository.PlantationRepository;
 import com.infofarm.Field.Service.PlantationService;
 import com.infofarm.Exception.Errors.IdNotFoundException;
@@ -23,18 +27,24 @@ public class PlantationServiceImplementation implements PlantationService {
     PlantationRepository plantationRepository;
 
     @Autowired
+    CropServiceImplementation cropService;
+
+    @Autowired
     BussinesRepository bussinesRepository;
 
     @Override
-    public Plantation getPlantation(Long id) throws IdNotFoundException {
-        return plantationRepository.findById(id).orElseThrow(() -> new IdNotFoundException("The plantation not found with id: " + id));
+    public PlantationFullResponseDTO getPlantation(Long id) throws IdNotFoundException {
+        return PlantationMapper.createFullPlantationResponseDTO(
+                plantationRepository.findById(id).orElseThrow(() -> new IdNotFoundException("The plantation not found with id: " + id)),
+                cropService.getCropDataByPlantationId(id,0,10)
+        );
     }
 
     @Override
     public Page<PlantationResponseDTO> getAllPlantations(int page, int size) {
         Pageable pageable = PageRequest.of(page,size);
         Page<Plantation> plantationsPage = plantationRepository.findAll(pageable);
-        return plantationsPage.map(this::createPlantationResponseDTO);
+        return plantationsPage.map(PlantationMapper::createPlantationResponseDTO);
     }
 
     @Override
@@ -49,7 +59,7 @@ public class PlantationServiceImplementation implements PlantationService {
                 .bussines(bussines)
                 .build();
 
-        return createPlantationResponseDTO(plantationRepository.save(newPlantation));
+        return PlantationMapper.createPlantationResponseDTO(plantationRepository.save(newPlantation));
     }
 
     @Override
@@ -66,14 +76,5 @@ public class PlantationServiceImplementation implements PlantationService {
     @Override
     public void deletePlantation(Long id) {
         plantationRepository.deleteById(id);
-    }
-
-    PlantationResponseDTO createPlantationResponseDTO(Plantation plantation) {
-        return PlantationResponseDTO.builder()
-                .id(plantation.getId())
-                .name(plantation.getName())
-                .description(plantation.getDescription())
-                .location(plantation.getLocation())
-                .build();
     }
 }

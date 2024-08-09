@@ -25,14 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -169,9 +164,14 @@ public class CropServiceImplementation implements CropService {
     }
 
     @Override
-    public List<CropDataResponseDTO> getCropDataByPlantationId(Long id) throws IdNotFoundException {
+    public Page<CropDataResponseDTO> getCropDataByPlantationId(Long id, int page, int size) throws IdNotFoundException {
+        Pageable pageable = PageRequest.of(page,size);
+
         Plantation p = plantationRepository.findById(id).orElseThrow(() -> new IdNotFoundException("The plantation not found with id: " + id));
-        return p.getCropData().stream().map(CropMapper::createCropDataResponseDTO).toList();
+
+        Page<CropData> cropsPage = cropDataRepository.findByPlantationId(id,pageable);
+
+        return cropsPage.map(CropMapper::createCropDataResponseDTO);
     }
 
     @Override

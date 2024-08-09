@@ -1,6 +1,7 @@
 package com.infofarm.Field.Mapper;
 
 import com.infofarm.Field.Dto.Response.Crop.CropResponseDTO;
+import com.infofarm.Field.Dto.Response.Crop.CropResponseReducedDTO;
 import com.infofarm.Field.Dto.Response.CropData.CropDataResponseDTO;
 import com.infofarm.Field.Dto.Response.CropNeed.CropNeedResponseDTO;
 import com.infofarm.Field.Models.Crop;
@@ -14,6 +15,13 @@ public class CropMapper {
                 .id(crop.getId())
                 .cropName(crop.getCropName())
                 .cropDescription(crop.getCropDescription())
+                .cropImage(crop.getImageURL())
+                .build();
+    }
+
+    public static CropResponseReducedDTO createCropResponseReducedDTO(Crop crop) {
+        return  CropResponseReducedDTO.builder()
+                .cropName(crop.getCropName())
                 .cropImage(crop.getImageURL())
                 .build();
     }
@@ -33,7 +41,7 @@ public class CropMapper {
                 .cost(cropData.getCost())
                 .collection_date(cropData.getCollection_date())
                 .planting_date(cropData.getPlanting_date())
-                .crop(createCropResponseDTO(cropData.getCrop()))
+                .crop(createCropResponseReducedDTO(cropData.getCrop()))
                 .needs(cropData.getCropNeeds()
                         .stream()
                         .map(CropMapper::createCropNeedResponseDTO).toList()
