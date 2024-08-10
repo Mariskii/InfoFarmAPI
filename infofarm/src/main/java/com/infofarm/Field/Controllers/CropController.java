@@ -12,9 +12,13 @@ import com.infofarm.Exception.Errors.IdNotFoundException;
 import com.infofarm.Field.Implementation.CropServiceImplementation;
 import com.infofarm.Field.Models.Crop;
 import com.infofarm.Field.Models.CropNeeds;
+import com.infofarm.common.dto.PageResponseDTO;
 import jakarta.validation.Valid;
+import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -89,6 +93,11 @@ public class CropController {
                                                                @RequestParam(required = false, defaultValue = "0") int page,
                                                                @RequestParam(required = false, defaultValue = "10") int size) throws IdNotFoundException {
         return cropServiceImpl.getCropDataByPlantationId(plantationId,page,size);
+    }
+
+    @GetMapping("get-crop-by-name")
+    public ResponseEntity<PageResponseDTO<CropResponseDTO>> getCropByName(@RequestParam String name,@PageableDefault(size = 5) Pageable pageable) {
+        return ResponseEntity.ok().body(cropServiceImpl.getCropsByName(name,pageable));
     }
 
     @GetMapping("crop-data/{Id}")

@@ -20,6 +20,8 @@ import com.infofarm.Field.Repository.CropRepository;
 import com.infofarm.Field.Repository.CropNeedsRepository;
 import com.infofarm.Field.Service.CropService;
 import com.infofarm.Images.Implementation.CloudinaryServiceImpl;
+import com.infofarm.common.dto.PageResponseDTO;
+import com.infofarm.common.utils.PageMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -118,6 +120,13 @@ public class CropServiceImplementation implements CropService {
         Pageable pageable = PageRequest.of(page,size);
         Page<Crop> cropsPage = cropRepository.findAll(pageable);
         return cropsPage.map(CropMapper::createCropResponseDTO);
+    }
+
+    @Override
+    public PageResponseDTO<CropResponseDTO> getCropsByName(String name, Pageable pageable) {
+        Page<CropResponseDTO> crops = cropRepository.findByCropNameContaining(name, pageable).map(CropMapper::createCropResponseDTO);;
+
+        return PageMapper.createPageResponse(crops);
     }
 
     @Override

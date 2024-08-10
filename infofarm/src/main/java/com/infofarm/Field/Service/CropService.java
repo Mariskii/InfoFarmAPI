@@ -11,6 +11,7 @@ import com.infofarm.Field.Dto.Request.CropNeeds.UpdateCropNeedDTO;
 import com.infofarm.Exception.Errors.IdNotFoundException;
 import com.infofarm.Field.Models.Crop;
 import com.infofarm.Field.Models.CropNeeds;
+import com.infofarm.common.dto.PageResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +30,8 @@ public interface CropService {
     CropResponseDTO findById(Long id) throws IdNotFoundException;
 
     Page<CropResponseDTO> getCrops(int page, int size);
+
+    PageResponseDTO<CropResponseDTO> getCropsByName(String name , Pageable pageable);
 
     Set<CropNeeds> findAllCropNeedsByCropId(Long cropId) throws IdNotFoundException;
 
