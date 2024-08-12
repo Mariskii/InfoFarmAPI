@@ -1,22 +1,20 @@
 package com.infofarm.Field.Service;
 
 import com.infofarm.Field.Dto.Request.Crop.CreateCropDTO;
-import com.infofarm.Field.Dto.Request.CropData.RequestCropDataDTO;
+import com.infofarm.Field.Dto.Request.CropData.CreateCropDataDTO;
+import com.infofarm.Field.Dto.Request.CropData.UpdateCropDataDTO;
 import com.infofarm.Field.Dto.Response.Crop.CropResponseDTO;
 import com.infofarm.Field.Dto.Response.CropData.CropDataResponseDTO;
-import com.infofarm.Field.Models.CropData;
 import com.infofarm.Field.Dto.Request.Crop.UpdateCropDTO;
 import com.infofarm.Field.Dto.Request.CropNeeds.CreateCropNeedDTO;
 import com.infofarm.Field.Dto.Request.CropNeeds.UpdateCropNeedDTO;
 import com.infofarm.Exception.Errors.IdNotFoundException;
-import com.infofarm.Field.Models.Crop;
 import com.infofarm.Field.Models.CropNeeds;
 import com.infofarm.common.dto.PageResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.Set;
 
 public interface CropService {
@@ -45,9 +43,9 @@ public interface CropService {
 
     CropDataResponseDTO getCropDataById(Long id) throws IdNotFoundException;
 
-    void addCropData(RequestCropDataDTO cropData, Long id, Long plantationId) throws IdNotFoundException;
+    CropDataResponseDTO addCropData(CreateCropDataDTO cropData, Long id, Long plantationId) throws IdNotFoundException;
 
-    void updateCropData(RequestCropDataDTO cropData, Long id) throws IdNotFoundException;
+    CropDataResponseDTO updateCropData(UpdateCropDataDTO cropData, Long cropId) throws IdNotFoundException;
 
     void deleteCropData(Long id) throws IdNotFoundException;
 }

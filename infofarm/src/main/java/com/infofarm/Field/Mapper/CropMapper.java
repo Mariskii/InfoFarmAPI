@@ -42,10 +42,6 @@ public class CropMapper {
                 .collection_date(cropData.getCollection_date())
                 .planting_date(cropData.getPlanting_date())
                 .crop(createCropResponseReducedDTO(cropData.getCrop()))
-                .needs(cropData.getCropNeeds()
-                        .stream()
-                        .map(CropMapper::createCropNeedResponseDTO).toList()
-                )
                 .build();
     }
 }

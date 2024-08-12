@@ -1,20 +1,18 @@
 package com.infofarm.Field.Controllers;
 
 import com.infofarm.Field.Dto.Request.Crop.CreateCropDTO;
-import com.infofarm.Field.Dto.Request.CropData.RequestCropDataDTO;
+import com.infofarm.Field.Dto.Request.CropData.CreateCropDataDTO;
+import com.infofarm.Field.Dto.Request.CropData.UpdateCropDataDTO;
 import com.infofarm.Field.Dto.Response.Crop.CropResponseDTO;
 import com.infofarm.Field.Dto.Response.CropData.CropDataResponseDTO;
-import com.infofarm.Field.Models.CropData;
 import com.infofarm.Field.Dto.Request.Crop.UpdateCropDTO;
 import com.infofarm.Field.Dto.Request.CropNeeds.CreateCropNeedDTO;
 import com.infofarm.Field.Dto.Request.CropNeeds.UpdateCropNeedDTO;
 import com.infofarm.Exception.Errors.IdNotFoundException;
 import com.infofarm.Field.Implementation.CropServiceImplementation;
-import com.infofarm.Field.Models.Crop;
 import com.infofarm.Field.Models.CropNeeds;
 import com.infofarm.common.dto.PageResponseDTO;
 import jakarta.validation.Valid;
-import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +22,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -105,21 +102,19 @@ public class CropController {
         return cropServiceImpl.getCropDataById(Id);
     }
 
-    @PutMapping("crop-data/update/crop/{cropId}")
-    public ResponseEntity<?> updateCropData(@Valid @RequestBody RequestCropDataDTO cropDataDTO, @PathVariable Long cropId) throws IdNotFoundException {
-        cropServiceImpl.updateCropData(cropDataDTO, cropId);
-        return new ResponseEntity<>(cropDataDTO, HttpStatus.OK);
+    @PutMapping("crop-data/update/crop-data/crop/{cropId}")
+    public ResponseEntity<CropDataResponseDTO> updateCropData(@Valid @RequestBody UpdateCropDataDTO cropDataDTO, @PathVariable Long cropId) throws IdNotFoundException {
+        return new ResponseEntity<>(cropServiceImpl.updateCropData(cropDataDTO, cropId), HttpStatus.OK);
     }
 
     @DeleteMapping("deleteData/{id}")
-    public ResponseEntity<?> deleteData(@RequestParam Long id) throws IdNotFoundException {
+    public ResponseEntity<?> deleteData(@PathVariable Long id) throws IdNotFoundException {
         cropServiceImpl.deleteCropData(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("{cropId}/add-data/plantation/{plantationId}")
-    public ResponseEntity<?> addCropData(@RequestBody RequestCropDataDTO cropDataDTO,@PathVariable Long cropId,@PathVariable Long plantationId) throws IdNotFoundException {
-        cropServiceImpl.addCropData(cropDataDTO,cropId,plantationId);
-        return new ResponseEntity<>(cropDataDTO, HttpStatus.OK);
+    public ResponseEntity<CropDataResponseDTO> addCropData(@RequestBody CreateCropDataDTO cropDataDTO, @PathVariable Long cropId, @PathVariable Long plantationId) throws IdNotFoundException {
+        return new ResponseEntity<>(cropServiceImpl.addCropData(cropDataDTO,cropId,plantationId), HttpStatus.OK);
     }
 }

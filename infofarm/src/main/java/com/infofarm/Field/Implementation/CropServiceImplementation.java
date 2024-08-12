@@ -1,10 +1,10 @@
 package com.infofarm.Field.Implementation;
 
 import com.infofarm.Field.Dto.Request.Crop.CreateCropDTO;
-import com.infofarm.Field.Dto.Request.CropData.RequestCropDataDTO;
+import com.infofarm.Field.Dto.Request.CropData.CreateCropDataDTO;
+import com.infofarm.Field.Dto.Request.CropData.UpdateCropDataDTO;
 import com.infofarm.Field.Dto.Response.Crop.CropResponseDTO;
 import com.infofarm.Field.Dto.Response.CropData.CropDataResponseDTO;
-import com.infofarm.Field.Dto.Response.CropNeed.CropNeedResponseDTO;
 import com.infofarm.Field.Mapper.CropMapper;
 import com.infofarm.Field.Models.CropData;
 import com.infofarm.Field.Models.Plantation;
@@ -191,34 +191,35 @@ public class CropServiceImplementation implements CropService {
     }
 
     @Override
-    public void addCropData(RequestCropDataDTO cropDataDTO, Long cropId, Long plantationId) throws IdNotFoundException {
+    public CropDataResponseDTO addCropData(CreateCropDataDTO cropDataDTO, Long cropId, Long plantationId) throws IdNotFoundException {
         Crop crop = cropRepository.findById(cropId).orElseThrow(() -> new IdNotFoundException("The crop not found with id: " + cropId));
 
         Plantation plantation = plantationRepository.findById(plantationId).orElseThrow(() -> new IdNotFoundException("The plant not found with id: " + plantationId));
 
         CropData newData = CropData.builder()
-                .kilos(cropDataDTO.getKilos())
-                .cost(cropDataDTO.getCost())
-                .kilo_price(cropDataDTO.getKiloPrice())
-                .planting_date(cropDataDTO.getPlanting_date())
-                .collection_date(cropDataDTO.getCollection_date())
+                .kilos(cropDataDTO.kilos())
+                .cost(cropDataDTO.cost())
+                .kilo_price(cropDataDTO.kiloPrice())
+                .planting_date(cropDataDTO.planting_date())
+                .collection_date(cropDataDTO.collection_date())
                 .plantation(plantation)
                 .crop(crop)
                 .build();
 
-        cropDataRepository.save(newData);
+        return CropMapper.createCropDataResponseDTO(cropDataRepository.save(newData));
     }
 
     @Override
-    public void updateCropData(RequestCropDataDTO cropData, Long id) throws IdNotFoundException {
-        CropData actualData =  cropDataRepository.findById(id).orElseThrow(() -> new IdNotFoundException("The crop not found with id: " + id));
+    public CropDataResponseDTO updateCropData(UpdateCropDataDTO cropData, Long cropId) throws IdNotFoundException {
+        CropData actualData =  cropDataRepository.findById(cropData.id()).orElseThrow(() -> new IdNotFoundException("The crop not found with id: " + cropData.id()));
 
-        actualData.setCost(cropData.getCost());
-        actualData.setKilos(cropData.getKilos());
-        actualData.setKilo_price(cropData.getKiloPrice());
-        actualData.setPlanting_date(cropData.getPlanting_date());
-        actualData.setCollection_date(cropData.getCollection_date());
-        cropDataRepository.save(actualData);
+        actualData.setCost(cropData.cost());
+        actualData.setKilos(cropData.kilos());
+        actualData.setKilo_price(cropData.kiloPrice());
+        actualData.setPlanting_date(cropData.planting_date());
+        actualData.setCollection_date(cropData.collection_date());
+        actualData.setCrop(cropRepository.findById(cropId).orElseThrow(() -> new IdNotFoundException("The crop not found with id: " + cropId)));
+        return CropMapper.createCropDataResponseDTO(cropDataRepository.save(actualData));
     }
 
     @Override
