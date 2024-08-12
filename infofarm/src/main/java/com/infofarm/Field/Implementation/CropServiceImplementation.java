@@ -191,6 +191,14 @@ public class CropServiceImplementation implements CropService {
     }
 
     @Override
+    public PageResponseDTO<CropDataResponseDTO> getAllCropDataByPlantationId(Long id, Pageable pageable) throws IdNotFoundException {
+
+        Page<CropData> cropData = cropDataRepository.findByPlantationId(id,pageable);
+
+        return PageMapper.createPageResponse(cropData.map(CropMapper::createCropDataResponseDTO));
+    }
+
+    @Override
     public CropDataResponseDTO addCropData(CreateCropDataDTO cropDataDTO, Long cropId, Long plantationId) throws IdNotFoundException {
         Crop crop = cropRepository.findById(cropId).orElseThrow(() -> new IdNotFoundException("The crop not found with id: " + cropId));
 
