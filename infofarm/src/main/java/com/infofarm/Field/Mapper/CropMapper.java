@@ -21,6 +21,7 @@ public class CropMapper {
 
     public static CropResponseReducedDTO createCropResponseReducedDTO(Crop crop) {
         return  CropResponseReducedDTO.builder()
+                .id(crop.getId())
                 .cropName(crop.getCropName())
                 .cropImage(crop.getImageURL())
                 .build();
