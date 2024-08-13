@@ -9,7 +9,7 @@ public record CreateCropDataDTO(
         Long id,
         Date planting_date,
         Date collection_date,
-        double kiloPrice,
+        double kilo_price,
         double cost,
         double kilos
 ) {

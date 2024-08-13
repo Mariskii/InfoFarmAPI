@@ -47,7 +47,7 @@ public interface CropService {
 
     CropDataResponseDTO addCropData(CreateCropDataDTO cropData, Long id, Long plantationId) throws IdNotFoundException;
 
-    CropDataResponseDTO updateCropData(UpdateCropDataDTO cropData, Long cropId) throws IdNotFoundException;
+    CropDataResponseDTO updateCropData(UpdateCropDataDTO cropData, Long cropId, Long cropDataId) throws IdNotFoundException;
 
     void deleteCropData(Long id) throws IdNotFoundException;
 }
