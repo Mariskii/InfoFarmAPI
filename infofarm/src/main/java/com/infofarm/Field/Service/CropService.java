@@ -23,7 +23,7 @@ public interface CropService {
 
     CropResponseDTO update(UpdateCropDTO crop, MultipartFile file) throws IdNotFoundException;
 
-    void delete(Long id);
+    void delete(Long id) throws IdNotFoundException;
 
     CropResponseDTO findById(Long id) throws IdNotFoundException;
 

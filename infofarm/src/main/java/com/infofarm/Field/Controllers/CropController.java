@@ -114,6 +114,7 @@ public class CropController {
 
     @DeleteMapping("deleteData/{id}")
     public ResponseEntity<?> deleteData(@PathVariable Long id) throws IdNotFoundException {
+        System.out.println(id);
         cropServiceImpl.deleteCropData(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

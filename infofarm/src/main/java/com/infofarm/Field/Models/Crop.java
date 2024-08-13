@@ -28,4 +28,7 @@ public class Crop {
 
     private String image_public_id;
 
+    @OneToMany(mappedBy = "crop", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
+    private List<CropData> cropDataList = new ArrayList<>();
 }

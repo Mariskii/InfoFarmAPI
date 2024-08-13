@@ -27,7 +27,7 @@ public class CropData {
     private double cost;
     private double kilos;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "crop_id", nullable = false)
     private Crop crop;
 

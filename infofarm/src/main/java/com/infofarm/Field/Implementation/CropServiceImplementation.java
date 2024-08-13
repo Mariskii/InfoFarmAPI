@@ -30,6 +30,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -99,11 +100,16 @@ public class CropServiceImplementation implements CropService {
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(Long id) throws IdNotFoundException {
 
-        cloudinaryService.deleteFile(cropRepository.findImagePublicIdById(id));
-        cropRepository.deleteById(id);
+        Crop crop = cropRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Crop with id: "+id+" not found"));
 
+        if(crop.getImage_public_id() != null)
+            cloudinaryService.deleteFile(cropRepository.findImagePublicIdById(id));
+
+
+
+        cropRepository.delete(crop);
     }
 
     //todo: Testeando privacidad de enpoints de los usuarios
@@ -233,6 +239,8 @@ public class CropServiceImplementation implements CropService {
 
     @Override
     public void deleteCropData(Long id) throws IdNotFoundException {
+
+
         cropDataRepository.deleteById(id);
     }
 }
