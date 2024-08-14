@@ -107,6 +107,11 @@ public class CropController {
         return ResponseEntity.ok().body(cropServiceImpl.getAllCropDataByPlantationId(idPlantation, pageable));
     }
 
+    @GetMapping("/crop-data/find-by-crop-name")
+    public ResponseEntity<PageResponseDTO<CropDataResponseDTO>> findCropByName(@RequestParam String cropName, Pageable pageable) throws IdNotFoundException {
+        return ResponseEntity.ok().body((cropServiceImpl.getCropDataByCropName(cropName,pageable)));
+    }
+
     @PutMapping("crop-data/update/{cropDataId}/crop/{cropId}")
     public ResponseEntity<CropDataResponseDTO> updateCropData(@Valid @RequestBody UpdateCropDataDTO cropDataDTO, @PathVariable Long cropId, @PathVariable Long cropDataId) throws IdNotFoundException {
         return new ResponseEntity<>(cropServiceImpl.updateCropData(cropDataDTO, cropId, cropDataId), HttpStatus.OK);

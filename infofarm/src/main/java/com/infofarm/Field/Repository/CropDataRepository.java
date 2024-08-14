@@ -10,4 +10,5 @@ import java.util.Set;
 
 public interface CropDataRepository extends JpaRepository<CropData, Long> {
     Page<CropData> findByPlantationId(Long id, Pageable pageable);
+    Page<CropData> findByCropCropName(String cropCropName, Pageable pageable);
 }

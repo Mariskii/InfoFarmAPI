@@ -41,6 +41,8 @@ public interface CropService {
 
     Page<CropDataResponseDTO> getCropDataByPlantationId(Long id, int page, int size) throws IdNotFoundException;
 
+    PageResponseDTO<CropDataResponseDTO> getCropDataByCropName(String cropName, Pageable pageable) throws IdNotFoundException;
+
     CropDataResponseDTO getCropDataById(Long id) throws IdNotFoundException;
 
     PageResponseDTO<CropDataResponseDTO> getAllCropDataByPlantationId(Long id, Pageable pageable) throws IdNotFoundException;

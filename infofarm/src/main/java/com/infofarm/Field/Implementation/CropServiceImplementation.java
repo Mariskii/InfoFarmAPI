@@ -188,6 +188,12 @@ public class CropServiceImplementation implements CropService {
     }
 
     @Override
+    public PageResponseDTO<CropDataResponseDTO> getCropDataByCropName(String cropName, Pageable pageable) throws IdNotFoundException {
+        Page<CropData> cropDataPage = cropDataRepository.findByCropCropName(cropName.toLowerCase(), pageable);
+        return PageMapper.createPageResponse(cropDataPage.map(CropMapper::createCropDataResponseDTO));
+    }
+
+    @Override
     public CropDataResponseDTO getCropDataById(Long id) throws IdNotFoundException {
 
         CropData cropData = cropDataRepository.findById(id)
@@ -239,8 +245,6 @@ public class CropServiceImplementation implements CropService {
 
     @Override
     public void deleteCropData(Long id) throws IdNotFoundException {
-
-
         cropDataRepository.deleteById(id);
     }
 }
