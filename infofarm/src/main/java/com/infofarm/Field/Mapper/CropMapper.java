@@ -7,6 +7,7 @@ import com.infofarm.Field.Dto.Response.CropNeed.CropNeedResponseDTO;
 import com.infofarm.Field.Models.Crop;
 import com.infofarm.Field.Models.CropData;
 import com.infofarm.Field.Models.CropNeeds;
+import com.infofarm.Field.Models.TypeSurface;
 
 public class CropMapper {
 
@@ -42,6 +43,9 @@ public class CropMapper {
                 .cost(cropData.getCost())
                 .collection_date(cropData.getCollection_date())
                 .planting_date(cropData.getPlanting_date())
+                .surface(cropData.getSurface())
+                .type_surface(cropData.getType_surface())
+                .kilos_surface(cropData.getKilos_surface())
                 .crop(createCropResponseReducedDTO(cropData.getCrop()))
                 .build();
     }

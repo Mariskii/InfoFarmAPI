@@ -6,21 +6,19 @@ import com.infofarm.Field.Dto.Request.CropData.UpdateCropDataDTO;
 import com.infofarm.Field.Dto.Response.Crop.CropResponseDTO;
 import com.infofarm.Field.Dto.Response.CropData.CropDataResponseDTO;
 import com.infofarm.Field.Mapper.CropMapper;
-import com.infofarm.Field.Models.CropData;
-import com.infofarm.Field.Models.Plantation;
+import com.infofarm.Field.Models.*;
 import com.infofarm.Field.Repository.CropDataRepository;
 import com.infofarm.Field.Dto.Request.Crop.UpdateCropDTO;
 import com.infofarm.Field.Dto.Request.CropNeeds.CreateCropNeedDTO;
 import com.infofarm.Field.Dto.Request.CropNeeds.UpdateCropNeedDTO;
 import com.infofarm.Field.Repository.PlantationRepository;
 import com.infofarm.Exception.Errors.IdNotFoundException;
-import com.infofarm.Field.Models.Crop;
-import com.infofarm.Field.Models.CropNeeds;
 import com.infofarm.Field.Repository.CropRepository;
 import com.infofarm.Field.Repository.CropNeedsRepository;
 import com.infofarm.Field.Service.CropService;
 import com.infofarm.Images.Implementation.CloudinaryServiceImpl;
 import com.infofarm.common.dto.PageResponseDTO;
+import com.infofarm.common.utils.ConversorUtil;
 import com.infofarm.common.utils.PageMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -223,6 +221,9 @@ public class CropServiceImplementation implements CropService {
                 .planting_date(cropDataDTO.planting_date())
                 .collection_date(cropDataDTO.collection_date())
                 .plantation(plantation)
+                .surface(cropDataDTO.surface())
+                .type_surface(cropDataDTO.type_surface())
+                .kilos_surface(cropDataDTO.kilos() / cropDataDTO.surface())
                 .crop(crop)
                 .build();
 

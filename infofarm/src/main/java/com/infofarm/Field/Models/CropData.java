@@ -27,6 +27,11 @@ public class CropData {
     private double cost;
     private double kilos;
 
+    private TypeSurface type_surface;
+
+    private double surface;
+    private double kilos_surface;
+
     @ManyToOne
     @JoinColumn(name = "crop_id", nullable = false)
     private Crop crop;
