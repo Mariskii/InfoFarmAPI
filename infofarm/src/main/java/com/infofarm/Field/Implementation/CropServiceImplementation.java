@@ -240,7 +240,10 @@ public class CropServiceImplementation implements CropService {
         actualData.setKilo_price(cropData.kilo_price());
         actualData.setPlanting_date(cropData.planting_date());
         actualData.setCollection_date(cropData.collection_date());
+        actualData.setType_surface(cropData.type_surface());
+        actualData.setKilos_surface(cropData.kilos()/cropData.surface());
         actualData.setCrop(cropRepository.findById(cropId).orElseThrow(() -> new IdNotFoundException("The crop not found with id: " + cropId)));
+
         return CropMapper.createCropDataResponseDTO(cropDataRepository.save(actualData));
     }
 
