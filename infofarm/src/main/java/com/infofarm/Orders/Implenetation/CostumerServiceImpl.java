@@ -2,6 +2,8 @@ package com.infofarm.Orders.Implenetation;
 
 import com.infofarm.Exception.Errors.IdNotFoundException;
 import com.infofarm.Orders.Dto.Request.CreateCostumerDTO;
+import com.infofarm.Orders.Dto.Response.CostumerReduced;
+import com.infofarm.Orders.Maper.CostumerMaper;
 import com.infofarm.Orders.Models.Costumer;
 import com.infofarm.Orders.Repository.CostumerRepository;
 import com.infofarm.Orders.Service.CostumerService;
@@ -34,6 +36,13 @@ public class CostumerServiceImpl implements CostumerService {
     public PageResponseDTO<Costumer> getCostumersByName(String name, Pageable pageable) throws IdNotFoundException {
         Page<Costumer> page = costumerRepository.findByCostumerNameStartingWith(name, pageable);
         return PageMapper.createPageResponse(page);
+    }
+
+    @Override
+    public PageResponseDTO<CostumerReduced> getCostumersReducedByName(String name, Pageable pageable) {
+        Page<Costumer> page = costumerRepository.findByCostumerNameStartingWith(name, pageable);
+
+        return PageMapper.createPageResponse(page.map(CostumerMaper::convertToCostumerReducedDTO));
     }
 
     @Override

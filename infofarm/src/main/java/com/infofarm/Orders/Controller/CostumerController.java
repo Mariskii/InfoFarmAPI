@@ -2,6 +2,7 @@ package com.infofarm.Orders.Controller;
 
 import com.infofarm.Exception.Errors.IdNotFoundException;
 import com.infofarm.Orders.Dto.Request.CreateCostumerDTO;
+import com.infofarm.Orders.Dto.Response.CostumerReduced;
 import com.infofarm.Orders.Implenetation.CostumerServiceImpl;
 import com.infofarm.Orders.Models.Costumer;
 import com.infofarm.common.dto.PageResponseDTO;
@@ -34,6 +35,11 @@ public class CostumerController {
     public PageResponseDTO<Costumer> getCostumerByName(@RequestParam String name,
                                                        @PageableDefault(size = 5) Pageable pageable) throws IdNotFoundException {
         return costumerService.getCostumersByName(name.toLowerCase(), pageable);
+    }
+    @GetMapping("get-reduced-by-name")
+    public PageResponseDTO<CostumerReduced> getCostumerReducedByName(@RequestParam String name,
+                                                                     @PageableDefault(size = 5) Pageable pageable) throws IdNotFoundException {
+        return costumerService.getCostumersReducedByName(name.toLowerCase(), pageable);
     }
 
     @PostMapping("add-costumer")
