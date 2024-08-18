@@ -7,6 +7,8 @@ import com.infofarm.Facturation.Repository.InvoicesRepository;
 import com.infofarm.Orders.Dto.Request.CropDataOrderDTO;
 import com.infofarm.Orders.Dto.Request.OrderDTO;
 import com.infofarm.Orders.Dto.Request.UpdateOrderProductDTO;
+import com.infofarm.Orders.Dto.Response.OrderResponseDTO;
+import com.infofarm.Orders.Maper.OrderMaper;
 import com.infofarm.Orders.Models.CropOrder;
 import com.infofarm.Orders.Models.OrderCropData;
 import com.infofarm.Orders.Repository.CostumerRepository;
@@ -42,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public CropOrder createOrder(OrderDTO order) throws IdNotFoundException, NotEnoughtQuantityException {
+    public OrderResponseDTO createOrder(OrderDTO order) throws IdNotFoundException, NotEnoughtQuantityException {
         CropOrder newCropOrder = CropOrder.builder()
                 .orderDate(order.orderDate())
                 .customer(costumerRepository.findById(order.customerId())
@@ -56,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
 
         addCropToOrder(order, newCropOrder);
 
-        return newCropOrder;
+        return OrderMaper.createOrderResponseDTO(newCropOrder);
     }
 
     private void addCropToOrder(OrderDTO order, CropOrder newCropOrder) throws IdNotFoundException, NotEnoughtQuantityException {

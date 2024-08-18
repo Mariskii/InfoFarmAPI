@@ -4,11 +4,13 @@ import com.infofarm.Exception.Errors.IdNotFoundException;
 import com.infofarm.Exception.Errors.NotEnoughtQuantityException;
 import com.infofarm.Orders.Dto.Request.OrderDTO;
 import com.infofarm.Orders.Dto.Request.UpdateOrderProductDTO;
+import com.infofarm.Orders.Dto.Response.OrderResponseDTO;
 import com.infofarm.Orders.Implenetation.OrderServiceImpl;
 
 import com.infofarm.Orders.Models.CropOrder;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,8 +26,8 @@ public class OrderController {
     }
 
     @PostMapping("create-order")
-    public CropOrder createOrder(@Valid @RequestBody OrderDTO order) throws IdNotFoundException, NotEnoughtQuantityException {
-        return orderService.createOrder(order);
+    public ResponseEntity<OrderResponseDTO> createOrder(@Valid @RequestBody OrderDTO order) throws IdNotFoundException, NotEnoughtQuantityException {
+        return ResponseEntity.ok(orderService.createOrder(order));
     }
 
     @PutMapping("{id}/update-order")
