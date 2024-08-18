@@ -4,8 +4,11 @@ import com.infofarm.Exception.Errors.IdNotFoundException;
 import com.infofarm.Orders.Dto.Request.CreateCostumerDTO;
 import com.infofarm.Orders.Implenetation.CostumerServiceImpl;
 import com.infofarm.Orders.Models.Costumer;
+import com.infofarm.common.dto.PageResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +28,12 @@ public class CostumerController {
     @GetMapping("all")
     public List<Costumer> getAllCostumer() {
         return costumerService.getCostumers();
+    }
+
+    @GetMapping("get-by-name")
+    public PageResponseDTO<Costumer> getCostumerByName(@RequestParam String name,
+                                                       @PageableDefault(size = 5) Pageable pageable) throws IdNotFoundException {
+        return costumerService.getCostumersByName(name.toLowerCase(), pageable);
     }
 
     @PostMapping("add-costumer")

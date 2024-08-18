@@ -5,7 +5,11 @@ import com.infofarm.Orders.Dto.Request.CreateCostumerDTO;
 import com.infofarm.Orders.Models.Costumer;
 import com.infofarm.Orders.Repository.CostumerRepository;
 import com.infofarm.Orders.Service.CostumerService;
+import com.infofarm.common.dto.PageResponseDTO;
+import com.infofarm.common.utils.PageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +28,12 @@ public class CostumerServiceImpl implements CostumerService {
     @Override
     public Costumer getCostumer(Long id) throws IdNotFoundException {
         return costumerRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Costumer not found"));
+    }
+
+    @Override
+    public PageResponseDTO<Costumer> getCostumersByName(String name, Pageable pageable) throws IdNotFoundException {
+        Page<Costumer> page = costumerRepository.findByCostumerNameStartingWith(name, pageable);
+        return PageMapper.createPageResponse(page);
     }
 
     @Override
